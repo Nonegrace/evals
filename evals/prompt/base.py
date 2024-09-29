@@ -114,9 +114,15 @@ class ChatCompletionPrompt(Prompt):
         Render a text string as a chat prompt. The default option we adopt here is to simply take the full prompt
         and treat it as a system message.
         """
-        return text_prompt_to_chat_prompt(prompt)
+        return text_prompt_to_chat_prompt(prompt=prompt)
 
     def to_formatted_prompt(self) -> OpenAICreateChatPrompt:
         if is_chat_prompt(self.raw_prompt):
             return self.raw_prompt
-        return self._render_text_as_chat_prompt(self.raw_prompt)
+        return self._render_text_as_chat_prompt(prompt=self.raw_prompt)
+
+    def render_prompt_role(self, model: str, prompt: OpenAICreateChatPrompt) -> OpenAICreateChatPrompt:
+        for message in prompt:
+            if "role" in message and message["role"] == "system" and model.startswith("o1-"):
+                message["role"] = "user"
+        return prompt

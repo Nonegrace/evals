@@ -164,7 +164,11 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
             )
 
         openai_create_prompt: OpenAICreateChatPrompt = prompt.to_formatted_prompt()
+        if isinstance(prompt, ChatCompletionPrompt):
+            openai_create_prompt = prompt.render_prompt_role(model=self.model, prompt=openai_create_prompt)
 
+        if self.model.startswith("o1-"):
+            kwargs.pop("temperature", None)
         result = openai_chat_completion_create_retrying(
             OpenAI(api_key=self.api_key, base_url=self.api_base),
             model=self.model,

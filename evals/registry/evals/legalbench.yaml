@@ -1,0 +1,8 @@
+legalbench-consumer_contracts_qa:
+  id: legalbench-consumer_contracts_qa.test.v1
+  metrics:
+  - accuracy
+legalbench-consumer_contracts_qa.test.v1:
+  args:
+    samples_jsonl: /Users/guanxiaoyao/qa/legal/research/evals/./evals/registry/data/legalbench/consumer_contracts_qa/samples.jsonl
+  class: evals.elsuite.basic.includes:Includes
