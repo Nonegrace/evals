@@ -1,0 +1,3 @@
+[submodule "prompts/legalbench"]
+	path = prompts/legalbench
+	url = git@github.com:Nonegrace/legalbench.git
